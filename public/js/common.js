@@ -86,28 +86,36 @@ Brayn.mountShell = function mountShell(active, user) {
       <div class="container topbar-inner">
         <a class="brand" href="/">
           <span class="brand-mark" aria-hidden="true">B</span>
-          Brayn <span>Microfinance</span>
+          <span class="brand-text">Brayn <span>Microfinance</span></span>
         </a>
         <form class="global-search" id="globalSearchForm" role="search">
-          <input type="search" id="globalSearchInput" placeholder="Search loans, customers…" autocomplete="off" />
+          <input type="search" id="globalSearchInput" placeholder="Search…" autocomplete="off" enterkeyhint="search" />
           <div class="search-results" id="globalSearchResults" hidden></div>
         </form>
-        <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">Menu</button>
+        <div class="topbar-actions">
+          <div class="notify-wrap">
+            <button type="button" class="notify-btn" id="notifyBtn" aria-label="Notifications">
+              Alerts <span class="notify-badge" id="notifyBadge" hidden>0</span>
+            </button>
+            <div class="notify-panel" id="notifyPanel" hidden></div>
+          </div>
+          <div class="auth-slot topbar-auth" data-auth-slot></div>
+          <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">Menu</button>
+        </div>
+        <div class="nav-scrim" id="navScrim" hidden></div>
         <nav class="nav-links" id="mainNav" aria-label="Main">
+          <div class="nav-drawer-head">
+            <strong>Menu</strong>
+            <button type="button" class="nav-close" id="navClose" aria-label="Close menu">Close</button>
+          </div>
           ${links
             .map(
               (link) =>
                 `<a href="${link.href}" class="${link.key === active ? 'active' : ''}">${link.label}</a>`
             )
             .join('')}
+          <div class="auth-slot nav-auth" data-auth-slot></div>
         </nav>
-        <div class="notify-wrap">
-          <button type="button" class="notify-btn" id="notifyBtn" aria-label="Notifications">
-            Alerts <span class="notify-badge" id="notifyBadge" hidden>0</span>
-          </button>
-          <div class="notify-panel" id="notifyPanel" hidden></div>
-        </div>
-        <div class="auth-slot" data-auth-slot></div>
       </div>
     </header>
   `;
@@ -120,11 +128,27 @@ Brayn.mountShell = function mountShell(active, user) {
 
 Brayn.bindMobileNav = function bindMobileNav() {
   const toggle = document.getElementById('navToggle');
+  const closeBtn = document.getElementById('navClose');
   const nav = document.getElementById('mainNav');
+  const scrim = document.getElementById('navScrim');
   if (!toggle || !nav) return;
-  toggle.addEventListener('click', () => {
-    nav.classList.toggle('open');
-    toggle.textContent = nav.classList.contains('open') ? 'Close' : 'Menu';
+
+  const setOpen = (open) => {
+    nav.classList.toggle('open', open);
+    document.body.classList.toggle('nav-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.textContent = open ? 'Close' : 'Menu';
+    if (scrim) scrim.hidden = !open;
+  };
+
+  toggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+  closeBtn?.addEventListener('click', () => setOpen(false));
+  scrim?.addEventListener('click', () => setOpen(false));
+  nav.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setOpen(false));
+  });
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setOpen(false);
   });
 };
 
@@ -252,14 +276,16 @@ Brayn.bindGlobalSearch = function bindGlobalSearch() {
 };
 
 Brayn.mountAuthNav = function mountAuthNav(user) {
-  const host = document.querySelector('[data-auth-slot]');
-  if (!host || !user) return;
-  host.innerHTML = `
+  const hosts = document.querySelectorAll('[data-auth-slot]');
+  if (!hosts.length || !user) return;
+  const markup = `
     <span class="nav-user">${Brayn.escapeHtml(user.username)} · ${Brayn.escapeHtml(user.role)}</span>
-    <button type="button" class="btn btn-secondary btn-compact" id="logoutBtn">Sign out</button>
+    <button type="button" class="btn btn-secondary btn-compact" data-logout-btn>Sign out</button>
   `;
-  const button = document.getElementById('logoutBtn');
-  if (button) {
+  hosts.forEach((host) => {
+    host.innerHTML = markup;
+  });
+  document.querySelectorAll('[data-logout-btn]').forEach((button) => {
     button.addEventListener('click', async () => {
       try {
         await Brayn.api('/api/auth/logout', { method: 'POST', body: '{}' });
@@ -267,7 +293,7 @@ Brayn.mountAuthNav = function mountAuthNav(user) {
         window.location.href = '/login';
       }
     });
-  }
+  });
 };
 
 Brayn.setText = function setText(id, value) {

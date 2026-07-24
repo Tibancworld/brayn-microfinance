@@ -18,5 +18,7 @@ services:
         value: admin
       - key: ADMIN_PASSWORD
         generateValue: true
+      - key: ENABLE_DEMO_LOGINS
+        value: 'true'
       - key: APP_URL
         value: https://www.myprototype.work

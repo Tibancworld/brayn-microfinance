@@ -356,13 +356,19 @@ async function init() {
 
   const adminUsername = process.env.ADMIN_USERNAME || 'admin';
   const adminPassword = process.env.ADMIN_PASSWORD || 'password123';
-  const user = await get('SELECT id FROM users WHERE username = ?', [adminUsername]);
+  const user = await get('SELECT id, password FROM users WHERE username = ?', [adminUsername]);
   if (!user) {
-    const hash = bcrypt.hashSync(adminPassword, 12);
     await run('INSERT INTO users (username, password, role, active) VALUES (?, ?, ?, 1)', [
       adminUsername,
-      hash,
+      bcrypt.hashSync(adminPassword, 12),
       'admin',
+    ]);
+  } else if (process.env.ADMIN_PASSWORD && !bcrypt.compareSync(adminPassword, user.password)) {
+    // Keep the seeded admin password aligned with Render/env ADMIN_PASSWORD.
+    await run('UPDATE users SET password = ?, active = 1, role = ? WHERE id = ?', [
+      bcrypt.hashSync(adminPassword, 12),
+      'admin',
+      user.id,
     ]);
   }
 

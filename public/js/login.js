@@ -12,6 +12,8 @@
   const message = document.getElementById('loginMessage');
   const passwordInput = document.getElementById('passwordInput');
   const togglePassword = document.getElementById('togglePassword');
+  const demoHost = document.getElementById('authDemo');
+  const demoRow = document.getElementById('authDemoRow');
 
   togglePassword?.addEventListener('click', () => {
     const hidden = passwordInput.type === 'password';
@@ -19,13 +21,26 @@
     togglePassword.textContent = hidden ? 'Hide' : 'Show';
   });
 
-  document.querySelectorAll('.auth-chip').forEach((chip) => {
-    chip.addEventListener('click', () => {
-      form.username.value = chip.dataset.user;
-      form.password.value = chip.dataset.pass;
-      form.username.focus();
-    });
-  });
+  try {
+    const demo = await Brayn.api('/api/auth/demo', { skipAuthRedirect: true });
+    if (demo.enabled && Array.isArray(demo.accounts) && demo.accounts.length && demoRow) {
+      demo.accounts.forEach((account) => {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'auth-chip';
+        chip.textContent = account.label;
+        chip.addEventListener('click', () => {
+          form.username.value = account.username || '';
+          form.password.value = account.password || '';
+          form.username.focus();
+        });
+        demoRow.appendChild(chip);
+      });
+      demoHost.hidden = false;
+    }
+  } catch {
+    // demo chips optional
+  }
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();

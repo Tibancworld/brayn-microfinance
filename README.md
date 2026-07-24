@@ -20,11 +20,15 @@ Open [http://localhost:3000/login](http://localhost:3000/login).
 
 ### Demo users
 
+Locally (and when `ENABLE_DEMO_LOGINS=true`):
+
 | User | Password | Access |
 |---|---|---|
-| `admin` | `password123` | Full access + staff settings |
+| `admin` | `password123` (or `ADMIN_PASSWORD` if set) | Full access + staff settings |
 | `officer` | `officer123` | Loans, customers, approvals |
 | `teller` | `teller123` | View data + record payments |
+
+On Render, use the **Admin** chip on `/login` (it fills the live `ADMIN_PASSWORD`) or the password from the service env vars.
 
 ## What is included
 

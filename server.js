@@ -235,6 +235,24 @@ app.get('/api/auth/me', (req, res) => {
   res.json({ ok: true, user: req.session.user });
 });
 
+app.get('/api/auth/demo', (_req, res) => {
+  const enabled =
+    process.env.ENABLE_DEMO_LOGINS === 'true' || process.env.NODE_ENV !== 'production';
+  if (!enabled) return res.json({ enabled: false, accounts: [] });
+  res.json({
+    enabled: true,
+    accounts: [
+      {
+        label: 'Admin',
+        username: process.env.ADMIN_USERNAME || 'admin',
+        password: process.env.ADMIN_PASSWORD || 'password123',
+      },
+      { label: 'Officer', username: 'officer', password: 'officer123' },
+      { label: 'Teller', username: 'teller', password: 'teller123' },
+    ],
+  });
+});
+
 app.post(
   '/api/auth/login',
   asyncHandler(async (req, res) => {

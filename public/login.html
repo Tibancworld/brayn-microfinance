@@ -63,13 +63,9 @@
             <button class="auth-submit" type="submit">Enter workspace</button>
             <p id="loginMessage" class="auth-error" aria-live="polite"></p>
 
-            <div class="auth-demo">
+            <div class="auth-demo" id="authDemo" hidden>
               <p>Quick demo access</p>
-              <div class="auth-demo-row">
-                <button type="button" class="auth-chip" data-user="admin" data-pass="password123">Admin</button>
-                <button type="button" class="auth-chip" data-user="officer" data-pass="officer123">Officer</button>
-                <button type="button" class="auth-chip" data-user="teller" data-pass="teller123">Teller</button>
-              </div>
+              <div class="auth-demo-row" id="authDemoRow"></div>
             </div>
           </form>
         </section>
