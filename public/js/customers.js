@@ -37,7 +37,7 @@ async function loadCustomersPage(page = Brayn.pageState.customers.page) {
         .map(
           (customer) => `
           <tr>
-            <td><a href="/customer.html?id=${customer.id}">${Brayn.escapeHtml(customer.name)}</a></td>
+            <td><a href="/customer?id=${customer.id}">${Brayn.escapeHtml(customer.name)}</a></td>
             <td>${Brayn.escapeHtml(customer.phone || '—')}</td>
             <td>${Brayn.escapeHtml(customer.branch || 'Main')}</td>
             <td>${Brayn.escapeHtml(customer.guarantor_name || '—')}</td>
@@ -46,7 +46,7 @@ async function loadCustomersPage(page = Brayn.pageState.customers.page) {
             <td>${Number(customer.loan_count || 0)}</td>
             <td>
               <div class="inline-actions">
-                <a class="btn btn-secondary btn-compact" href="/customer.html?id=${customer.id}">View</a>
+                <a class="btn btn-secondary btn-compact" href="/customer?id=${customer.id}">View</a>
                 ${
                   canManage
                     ? `<button class="btn btn-secondary btn-compact" data-edit="${customer.id}">Edit</button>`

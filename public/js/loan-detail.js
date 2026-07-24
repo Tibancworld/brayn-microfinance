@@ -67,11 +67,11 @@ async function loadLoanDetail() {
       `${loan.product} · ${loan.status} · Branch ${loan.branch || 'Main'} · Officer ${loan.officer || '—'}`
     );
     const statementLink = document.getElementById('statementLink');
-    if (statementLink) statementLink.href = `/statement.html?id=${loan.id}`;
+    if (statementLink) statementLink.href = `/statement?id=${loan.id}`;
     if (loan.customer_id) {
       const subtitle = document.getElementById('loanSubtitle');
       if (subtitle) {
-        subtitle.innerHTML = `${Brayn.escapeHtml(loan.product)} · ${Brayn.statusBadge(loan.status)} · <a href="/customer.html?id=${loan.customer_id}">${Brayn.escapeHtml(loan.customer_name)}</a> · Branch ${Brayn.escapeHtml(loan.branch || 'Main')}`;
+        subtitle.innerHTML = `${Brayn.escapeHtml(loan.product)} · ${Brayn.statusBadge(loan.status)} · <a href="/customer?id=${loan.customer_id}">${Brayn.escapeHtml(loan.customer_name)}</a> · Branch ${Brayn.escapeHtml(loan.branch || 'Main')}`;
       }
     }
 
@@ -100,8 +100,8 @@ async function loadLoanDetail() {
       if (canShowPay) {
         const suggested = Number(data.nextDueAmount || 0);
         payLoanLink.href = suggested
-          ? `/payments.html?loanId=${loan.id}&amount=${encodeURIComponent(suggested)}`
-          : `/payments.html?loanId=${loan.id}`;
+          ? `/payments?loanId=${loan.id}&amount=${encodeURIComponent(suggested)}`
+          : `/payments?loanId=${loan.id}`;
       }
     }
     if (closeBtn) {
@@ -143,7 +143,7 @@ async function loadLoanDetail() {
       .map(
         (payment) => `
         <tr>
-          <td><a href="/receipt.html?id=${payment.id}">PY-${String(payment.id).padStart(4, '0')}</a></td>
+          <td><a href="/receipt?id=${payment.id}">PY-${String(payment.id).padStart(4, '0')}</a></td>
           <td>${Brayn.escapeHtml(payment.channel)}</td>
           <td>${Brayn.formatKes(payment.amount)}</td>
           <td>${Brayn.escapeHtml(payment.reference || '—')}</td>
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
           status: 'Settled',
         }),
       });
-      message.innerHTML = `Payment posted. <a href="/receipt.html?id=${result.payment.id}">Open receipt PY-${String(result.payment.id).padStart(4, '0')}</a>`;
+      message.innerHTML = `Payment posted. <a href="/receipt?id=${result.payment.id}">Open receipt PY-${String(result.payment.id).padStart(4, '0')}</a>`;
       event.target.reset();
       await loadLoanDetail();
     } catch (error) {

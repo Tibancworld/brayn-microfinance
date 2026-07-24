@@ -26,7 +26,7 @@ async function bootDashboard() {
         ? rows
             .map(
               (row) => `
-            <a class="alert-item" href="/loan.html?id=${row.loan_id}">
+            <a class="alert-item" href="/loan?id=${row.loan_id}">
               <strong>${Brayn.escapeHtml(row.customer_name)}</strong>
               <span>${Brayn.formatKes(row.amount_due - row.amount_paid)}</span>
               <span>Due ${Brayn.escapeHtml(row.due_date)} · ${Brayn.escapeHtml(row.product)}</span>
@@ -43,7 +43,7 @@ async function bootDashboard() {
         ? rows
             .map(
               (row) => `
-            <a class="alert-item overdue" href="/loan.html?id=${row.loan_id}">
+            <a class="alert-item overdue" href="/loan?id=${row.loan_id}">
               <strong>${Brayn.escapeHtml(row.customer_name)}</strong>
               <span>${Brayn.formatKes(row.amount_due - row.amount_paid)}</span>
               <span>Was due ${Brayn.escapeHtml(row.due_date)} · DPD ${Number(row.days_past_due || 0)}</span>
@@ -61,7 +61,7 @@ async function bootDashboard() {
             .map(
               (loan) => `
             <tr>
-              <td><a href="/loan.html?id=${loan.id}">LN-${String(loan.id).padStart(4, '0')}</a></td>
+              <td><a href="/loan?id=${loan.id}">LN-${String(loan.id).padStart(4, '0')}</a></td>
               <td>${Brayn.escapeHtml(loan.customer_name)}</td>
               <td>${Brayn.formatKes(loan.outstanding || 0)}</td>
               <td>${Brayn.statusBadge(loan.status)}</td>
@@ -79,7 +79,7 @@ async function bootDashboard() {
             .map(
               (payment) => `
             <tr>
-              <td><a href="/receipt.html?id=${payment.id}">PY-${String(payment.id).padStart(4, '0')}</a></td>
+              <td><a href="/receipt?id=${payment.id}">PY-${String(payment.id).padStart(4, '0')}</a></td>
               <td>${Brayn.escapeHtml(payment.customer_name)}</td>
               <td>${Brayn.formatKes(payment.amount)}</td>
               <td>${Brayn.escapeHtml(payment.channel)}</td>

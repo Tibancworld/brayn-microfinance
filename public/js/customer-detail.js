@@ -29,8 +29,8 @@ async function loadCustomerDetail() {
     const payLink = document.getElementById('customerPayLink');
     if (payLink) {
       payLink.href = activeLoan
-        ? `/payments.html?loanId=${activeLoan.id}`
-        : '/payments.html';
+        ? `/payments?loanId=${activeLoan.id}`
+        : '/payments';
     }
     Brayn.setText('c-loans', String(loans.length));
     Brayn.setText('c-outstanding', Brayn.formatKes(outstanding));
@@ -49,7 +49,7 @@ async function loadCustomerDetail() {
           .map(
             (loan) => `
           <tr>
-            <td><a href="/loan.html?id=${loan.id}">LN-${String(loan.id).padStart(4, '0')}</a></td>
+            <td><a href="/loan?id=${loan.id}">LN-${String(loan.id).padStart(4, '0')}</a></td>
             <td>${Brayn.escapeHtml(loan.product)}</td>
             <td>${Brayn.formatKes(loan.outstanding || 0)}</td>
             <td>${Brayn.statusBadge(loan.status)}</td>
@@ -63,8 +63,8 @@ async function loadCustomerDetail() {
           .map(
             (payment) => `
           <tr>
-            <td><a href="/receipt.html?id=${payment.id}">PY-${String(payment.id).padStart(4, '0')}</a></td>
-            <td>${payment.loan_id ? `<a href="/loan.html?id=${payment.loan_id}">LN-${String(payment.loan_id).padStart(4, '0')}</a>` : '—'}</td>
+            <td><a href="/receipt?id=${payment.id}">PY-${String(payment.id).padStart(4, '0')}</a></td>
+            <td>${payment.loan_id ? `<a href="/loan?id=${payment.loan_id}">LN-${String(payment.loan_id).padStart(4, '0')}</a>` : '—'}</td>
             <td>${Brayn.escapeHtml(payment.channel)}</td>
             <td>${Brayn.formatKes(payment.amount)}</td>
             <td>${Brayn.statusBadge(payment.status)}</td>

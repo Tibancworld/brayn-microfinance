@@ -2,7 +2,7 @@ async function loadSettingsPage() {
   const user = await Brayn.requireSession();
   if (!user) return;
   if (user.role !== 'admin') {
-    window.location.href = '/index.html';
+    window.location.href = '/';
     return;
   }
   Brayn.mountShell('settings', user);

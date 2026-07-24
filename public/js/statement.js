@@ -5,7 +5,7 @@ async function loadStatement() {
 
   const id = Number(new URLSearchParams(window.location.search).get('id'));
   const back = document.getElementById('backLink');
-  if (back && id) back.href = `/loan.html?id=${id}`;
+  if (back && id) back.href = `/loan?id=${id}`;
   if (!id) {
     Brayn.setText('stmtTitle', 'Missing loan id');
     return;

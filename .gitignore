@@ -3,6 +3,7 @@ node_modules/
 venv/
 .env
 .cf-admin-password.txt
+.render-admin-password.txt
 .tunnel-token.txt
 .tunnel-id.txt
 .probe-login.html

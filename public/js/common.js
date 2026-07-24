@@ -34,12 +34,10 @@ Brayn.api = async function api(url, options = {}) {
   }
 
   if (response.status === 401 && !options.skipAuthRedirect) {
-    const onLogin =
-      window.location.pathname.endsWith('/login.html') ||
-      window.location.pathname.endsWith('/login');
+    const onLogin = window.location.pathname === '/login' || window.location.pathname.endsWith('/login');
     if (!onLogin) {
       const next = encodeURIComponent(window.location.pathname + window.location.search);
-      window.location.href = `/login.html?next=${next}`;
+      window.location.href = `/login?next=${next}`;
     }
   }
 
@@ -57,7 +55,7 @@ Brayn.requireSession = async function requireSession() {
     return data.user;
   } catch {
     const next = encodeURIComponent(window.location.pathname + window.location.search);
-    window.location.href = `/login.html?next=${next}`;
+    window.location.href = `/login?next=${next}`;
     return null;
   }
 };
@@ -71,22 +69,22 @@ Brayn.mountShell = function mountShell(active, user) {
   if (!host) return;
 
   const links = [
-    { href: '/index.html', key: 'dashboard', label: 'Dashboard' },
-    { href: '/loans.html', key: 'loans', label: 'Loans' },
-    { href: '/customers.html', key: 'customers', label: 'Customers' },
-    { href: '/collections.html', key: 'collections', label: 'Collections' },
-    { href: '/payments.html', key: 'payments', label: 'Payments' },
-    { href: '/reports.html', key: 'reports', label: 'Reports' },
+    { href: '/', key: 'dashboard', label: 'Dashboard' },
+    { href: '/loans', key: 'loans', label: 'Loans' },
+    { href: '/customers', key: 'customers', label: 'Customers' },
+    { href: '/collections', key: 'collections', label: 'Collections' },
+    { href: '/payments', key: 'payments', label: 'Payments' },
+    { href: '/reports', key: 'reports', label: 'Reports' },
   ];
-  links.push({ href: '/account.html', key: 'account', label: 'Account' });
+  links.push({ href: '/account', key: 'account', label: 'Account' });
   if (user?.role === 'admin') {
-    links.push({ href: '/settings.html', key: 'settings', label: 'Settings' });
+    links.push({ href: '/settings', key: 'settings', label: 'Settings' });
   }
 
   host.innerHTML = `
     <header class="topbar">
       <div class="container topbar-inner">
-        <a class="brand" href="/index.html">
+        <a class="brand" href="/">
           <span class="brand-mark" aria-hidden="true">B</span>
           Brayn <span>Microfinance</span>
         </a>
@@ -149,17 +147,17 @@ Brayn.bindNotifications = async function bindNotifications() {
     const parts = [];
     if (data.counts?.pendingApprovals) {
       parts.push(
-        `<a class="notify-item" href="/loans.html?status=Pending"><strong>${data.counts.pendingApprovals} pending approvals</strong><span>Needs officer review</span></a>`
+        `<a class="notify-item" href="/loans?status=Pending"><strong>${data.counts.pendingApprovals} pending approvals</strong><span>Needs officer review</span></a>`
       );
     }
     (data.overdue || []).forEach((row) => {
       parts.push(
-        `<a class="notify-item danger" href="/loan.html?id=${row.loan_id}"><strong>${Brayn.escapeHtml(row.customer_name)}</strong><span>Overdue ${Brayn.escapeHtml(row.due_date)} · ${Brayn.formatKes(row.amount_due - row.amount_paid)}</span></a>`
+        `<a class="notify-item danger" href="/loan?id=${row.loan_id}"><strong>${Brayn.escapeHtml(row.customer_name)}</strong><span>Overdue ${Brayn.escapeHtml(row.due_date)} · ${Brayn.formatKes(row.amount_due - row.amount_paid)}</span></a>`
       );
     });
     (data.dueSoon || []).forEach((row) => {
       parts.push(
-        `<a class="notify-item" href="/loan.html?id=${row.loan_id}"><strong>${Brayn.escapeHtml(row.customer_name)}</strong><span>Due ${Brayn.escapeHtml(row.due_date)} · ${Brayn.formatKes(row.amount_due - row.amount_paid)}</span></a>`
+        `<a class="notify-item" href="/loan?id=${row.loan_id}"><strong>${Brayn.escapeHtml(row.customer_name)}</strong><span>Due ${Brayn.escapeHtml(row.due_date)} · ${Brayn.formatKes(row.amount_due - row.amount_paid)}</span></a>`
       );
     });
     panel.innerHTML = parts.length
@@ -197,7 +195,7 @@ Brayn.bindGlobalSearch = function bindGlobalSearch() {
         `<div class="search-group"><strong>Loans</strong>${data.loans
           .map(
             (loan) =>
-              `<a href="/loan.html?id=${loan.id}">LN-${String(loan.id).padStart(4, '0')} · ${Brayn.escapeHtml(loan.customer_name)} · ${Brayn.escapeHtml(loan.status)}</a>`
+              `<a href="/loan?id=${loan.id}">LN-${String(loan.id).padStart(4, '0')} · ${Brayn.escapeHtml(loan.customer_name)} · ${Brayn.escapeHtml(loan.status)}</a>`
           )
           .join('')}</div>`
       );
@@ -207,7 +205,7 @@ Brayn.bindGlobalSearch = function bindGlobalSearch() {
         `<div class="search-group"><strong>Customers</strong>${data.customers
           .map(
             (customer) =>
-              `<a href="/customer.html?id=${customer.id}">${Brayn.escapeHtml(customer.name)} · ${Brayn.escapeHtml(customer.phone || '—')}</a>`
+              `<a href="/customer?id=${customer.id}">${Brayn.escapeHtml(customer.name)} · ${Brayn.escapeHtml(customer.phone || '—')}</a>`
           )
           .join('')}</div>`
       );
@@ -217,7 +215,7 @@ Brayn.bindGlobalSearch = function bindGlobalSearch() {
         `<div class="search-group"><strong>Payments</strong>${data.payments
           .map(
             (payment) =>
-              `<a href="${payment.loan_id ? `/loan.html?id=${payment.loan_id}` : '/payments.html'}">PY-${String(payment.id).padStart(4, '0')} · ${Brayn.escapeHtml(payment.customer_name)} · ${Brayn.formatKes(payment.amount)}</a>`
+              `<a href="${payment.loan_id ? `/loan?id=${payment.loan_id}` : '/payments'}">PY-${String(payment.id).padStart(4, '0')} · ${Brayn.escapeHtml(payment.customer_name)} · ${Brayn.formatKes(payment.amount)}</a>`
           )
           .join('')}</div>`
       );
@@ -266,7 +264,7 @@ Brayn.mountAuthNav = function mountAuthNav(user) {
       try {
         await Brayn.api('/api/auth/logout', { method: 'POST', body: '{}' });
       } finally {
-        window.location.href = '/login.html';
+        window.location.href = '/login';
       }
     });
   }

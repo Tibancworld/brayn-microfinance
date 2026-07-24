@@ -98,7 +98,7 @@ async function loadPaymentsPage(page = Brayn.pageState.payments.page) {
         .map((payment) => {
           const actions = [];
           actions.push(
-            `<a class="btn btn-secondary btn-compact" href="/receipt.html?id=${payment.id}">Receipt</a>`
+            `<a class="btn btn-secondary btn-compact" href="/receipt?id=${payment.id}">Receipt</a>`
           );
           if (canSettle && payment.status === 'Pending') {
             actions.push(
@@ -112,11 +112,11 @@ async function loadPaymentsPage(page = Brayn.pageState.payments.page) {
           }
           return `
           <tr>
-            <td><a href="/receipt.html?id=${payment.id}">PY-${String(payment.id).padStart(4, '0')}</a></td>
-            <td>${payment.loan_id ? `<a href="/loan.html?id=${payment.loan_id}">LN-${String(payment.loan_id).padStart(4, '0')}</a>` : '—'}</td>
+            <td><a href="/receipt?id=${payment.id}">PY-${String(payment.id).padStart(4, '0')}</a></td>
+            <td>${payment.loan_id ? `<a href="/loan?id=${payment.loan_id}">LN-${String(payment.loan_id).padStart(4, '0')}</a>` : '—'}</td>
             <td>${
               payment.customer_id
-                ? `<a href="/customer.html?id=${payment.customer_id}">${Brayn.escapeHtml(payment.customer_name)}</a>`
+                ? `<a href="/customer?id=${payment.customer_id}">${Brayn.escapeHtml(payment.customer_name)}</a>`
                 : Brayn.escapeHtml(payment.customer_name)
             }</td>
             <td>${Brayn.escapeHtml(payment.channel)}</td>
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
             status: data.get('status') || 'Settled',
           }),
         });
-        message.innerHTML = `Payment recorded. <a href="/receipt.html?id=${result.payment.id}">Open receipt PY-${String(result.payment.id).padStart(4, '0')}</a>`;
+        message.innerHTML = `Payment recorded. <a href="/receipt?id=${result.payment.id}">Open receipt PY-${String(result.payment.id).padStart(4, '0')}</a>`;
         form.reset();
         document.getElementById('suggestedDue').hidden = true;
         await loadPaymentsPage(1);

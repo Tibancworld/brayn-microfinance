@@ -40,18 +40,18 @@ async function loadCollectionsPage(page = Brayn.pageState.collections.page) {
             <td>${Brayn.escapeHtml(row.due_date)}</td>
             <td>${
               row.customer_id
-                ? `<a href="/customer.html?id=${row.customer_id}">${Brayn.escapeHtml(row.customer_name)}</a>`
+                ? `<a href="/customer?id=${row.customer_id}">${Brayn.escapeHtml(row.customer_name)}</a>`
                 : Brayn.escapeHtml(row.customer_name)
             }</td>
-            <td><a href="/loan.html?id=${row.loan_id}">LN-${String(row.loan_id).padStart(4, '0')}</a></td>
+            <td><a href="/loan?id=${row.loan_id}">LN-${String(row.loan_id).padStart(4, '0')}</a></td>
             <td>#${row.installment_no}</td>
             <td>${Brayn.formatKes(row.amount_owed)}</td>
             <td>${Brayn.formatKes(row.penalty || 0)}</td>
             <td>${Number(row.days_past_due || 0)}</td>
             <td>
               <div class="inline-actions">
-                <a class="btn btn-primary btn-compact" href="/payments.html?loanId=${row.loan_id}&amount=${encodeURIComponent(row.amount_owed)}">Record payment</a>
-                <a class="btn btn-secondary btn-compact" href="/loan.html?id=${row.loan_id}">Ledger</a>
+                <a class="btn btn-primary btn-compact" href="/payments?loanId=${row.loan_id}&amount=${encodeURIComponent(row.amount_owed)}">Record payment</a>
+                <a class="btn btn-secondary btn-compact" href="/loan?id=${row.loan_id}">Ledger</a>
               </div>
             </td>
           </tr>`

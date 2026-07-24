@@ -19,9 +19,15 @@ In Cloudflare DNS for `myprototype.work` (**bblessking** account):
 |---|---|---|---|
 | CNAME | `www` | `brayn-microfinance.onrender.com` | Proxied (orange) |
 
-Remove the tunnel CNAME target (`*.cfargotunnel.com`).
+Also remove `www.myprototype.work` from Cloudflare Tunnel **Public Hostnames**  
+(otherwise Cloudflare keeps routing to the tunnel even if DNS says Render).
 
-Optional: Cloudflare SSL/TLS mode **Full**.
+SSL/TLS mode: **Full**.
+
+## After Render is live
+
+`https://brayn-microfinance.onrender.com/login` should return 200  
+(not `x-render-routing: no-server`). Then `www.myprototype.work` will work with the PC off.
 
 ## Notes
 

@@ -16,7 +16,7 @@ npm install
 npm start
 ```
 
-Open [http://localhost:3000/login.html](http://localhost:3000/login.html).
+Open [http://localhost:3000/login](http://localhost:3000/login).
 
 ### Demo users
 

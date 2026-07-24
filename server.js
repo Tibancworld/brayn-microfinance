@@ -173,6 +173,55 @@ app.use((req, res, next) => {
   next();
 });
 
+const PUBLIC_DIR = path.join(__dirname, 'public');
+
+function safeNextPath(value) {
+  if (typeof value !== 'string' || !value.startsWith('/') || value.startsWith('//')) return '/';
+  if (value.startsWith('/api')) return '/';
+  const pathOnly = value.split('?')[0];
+  if (pathOnly === '/login' || pathOnly === '/login.html') return '/';
+  return value;
+}
+
+function resolveHtmlPage(pathname) {
+  if (pathname === '/') return 'index.html';
+  if (path.extname(pathname)) return null;
+  const base = pathname.slice(1);
+  if (!base || base.includes('/') || base.includes('\\') || base.includes('..')) return null;
+  const file = `${base}.html`;
+  if (!fs.existsSync(path.join(PUBLIC_DIR, file))) return null;
+  return file;
+}
+
+// Clean URLs + server-side page auth (stops dashboard flash before login).
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  if (req.path.startsWith('/api')) return next();
+
+  if (req.path.endsWith('.html')) {
+    let clean = req.path.slice(0, -5);
+    if (clean === '/index' || clean === '') clean = '/';
+    const query = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+    return res.redirect(301, `${clean}${query}`);
+  }
+
+  if (req.path.startsWith('/css') || req.path.startsWith('/js')) return next();
+
+  const htmlFile = resolveHtmlPage(req.path);
+  if (!htmlFile) return next();
+
+  if (htmlFile === 'login.html') {
+    if (req.session?.user) return res.redirect(302, safeNextPath(req.query.next));
+    return res.sendFile(path.join(PUBLIC_DIR, 'login.html'));
+  }
+
+  if (!req.session?.user) {
+    return res.redirect(302, `/login?next=${encodeURIComponent(req.originalUrl)}`);
+  }
+
+  return res.sendFile(path.join(PUBLIC_DIR, htmlFile));
+});
+
 app.get(
   '/api/health',
   asyncHandler(async (_req, res) => {
@@ -1213,7 +1262,7 @@ app.get(
   })
 );
 
-app.use(express.static(path.join(__dirname, 'public'), { index: 'index.html', extensions: ['html'] }));
+app.use(express.static(PUBLIC_DIR, { index: false, extensions: ['html'] }));
 app.use('/api', (_req, res) => res.status(404).json({ error: 'API route not found' }));
 app.use((err, _req, res, _next) => {
   const status = err.status || 500;

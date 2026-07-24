@@ -47,8 +47,8 @@ async function loadLoansPage(page = Brayn.pageState.loans.page) {
         .map((loan) => {
           const id = Brayn.escapeHtml(loan.id);
           let actions = `
-            <a class="btn btn-secondary btn-compact" href="/loan.html?id=${id}">Ledger</a>
-            <a class="btn btn-secondary btn-compact" href="/statement.html?id=${id}">Statement</a>`;
+            <a class="btn btn-secondary btn-compact" href="/loan?id=${id}">Ledger</a>
+            <a class="btn btn-secondary btn-compact" href="/statement?id=${id}">Statement</a>`;
           if (canManage && loan.status === 'Pending') {
             actions += `
               <button class="btn btn-secondary btn-compact" data-action="Approved" data-id="${id}">Approve</button>
@@ -64,10 +64,10 @@ async function loadLoansPage(page = Brayn.pageState.loans.page) {
 
           return `
             <tr>
-              <td><a href="/loan.html?id=${id}">LN-${String(loan.id).padStart(4, '0')}</a></td>
+              <td><a href="/loan?id=${id}">LN-${String(loan.id).padStart(4, '0')}</a></td>
               <td>${
                 loan.customer_id
-                  ? `<a href="/customer.html?id=${loan.customer_id}">${Brayn.escapeHtml(loan.customer_name)}</a>`
+                  ? `<a href="/customer?id=${loan.customer_id}">${Brayn.escapeHtml(loan.customer_name)}</a>`
                   : Brayn.escapeHtml(loan.customer_name)
               }</td>
               <td>${Brayn.escapeHtml(loan.product)}</td>

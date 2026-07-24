@@ -2,7 +2,7 @@
   try {
     await Brayn.api('/api/auth/me', { skipAuthRedirect: true });
     const params = new URLSearchParams(window.location.search);
-    window.location.href = params.get('next') || '/index.html';
+    window.location.href = params.get('next') || '/';
     return;
   } catch {
     // stay on login
@@ -45,7 +45,7 @@
         }),
       });
       const params = new URLSearchParams(window.location.search);
-      window.location.href = params.get('next') || '/index.html';
+      window.location.href = params.get('next') || '/';
     } catch (error) {
       message.textContent = error.message;
       submit.disabled = false;
