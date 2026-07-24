@@ -67,8 +67,8 @@ Copy `.env.example` to `.env`:
 - `SESSION_SECRET`
 - `ADMIN_USERNAME` / `ADMIN_PASSWORD` (seed only if admin does not exist)
 - `NODE_ENV=production` for secure cookies
-- `APP_URL` (public URL, e.g. `https://www.myprototype.com`)
+- `APP_URL` (public URL, e.g. `https://www.myprototype.work`)
 
-## Deploy on Cloudflare (www.myprototype.com)
+## Deploy (always-on, no local PC)
 
-See [DEPLOY.md](DEPLOY.md). Tunnel `brayn-mf` is configured for `www.myprototype.com` → local port 3000. Point DNS as documented there, or upgrade Workers Paid and run `npm run cf:deploy` for always-on hosting.
+See [DEPLOY.md](DEPLOY.md). Use **Render** (blueprint in repo), then point `www.myprototype.work` at the Render URL. Cloudflare Containers require Workers Paid.
