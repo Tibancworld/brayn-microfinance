@@ -1170,18 +1170,17 @@ button.linkish {
   .quick-links { grid-template-columns: 1fr 1fr; }
   .auth-main {
     grid-template-columns: 1fr;
-    grid-template-areas: "form" "intro";
-    gap: 1rem;
-    padding: 0.25rem 0 0.75rem;
+    grid-template-areas: "intro" "form";
+    gap: 1.25rem;
+    padding: 0.5rem 0 1rem;
   }
   .auth-form {
     margin: 0;
     width: 100%;
-    padding: 1.2rem 1rem 1rem;
+    padding: 1.35rem 1.2rem 1.15rem;
   }
-  .auth-intro h1 { font-size: clamp(1.8rem, 9vw, 2.6rem); }
-  .auth-lead { font-size: 0.95rem; max-width: none; }
-  .auth-points { display: none; }
+  .auth-intro h1 { font-size: clamp(2.2rem, 10vw, 3.4rem); }
+  .auth-lead { font-size: 0.98rem; }
 }
 
 @media (max-width: 720px) {
@@ -1336,7 +1335,7 @@ button.linkish {
   }
   .doc-grid { grid-template-columns: 1fr !important; }
 
-  /* Login: fit one phone screen without pinch-zoom */
+  /* Login: original hero + form, kept within the phone width */
   .auth-page,
   .auth-stage {
     min-height: 100dvh;
@@ -1345,10 +1344,9 @@ button.linkish {
   }
   .auth-stage {
     padding:
-      calc(0.75rem + env(safe-area-inset-top))
-      0.85rem
-      calc(0.75rem + env(safe-area-inset-bottom));
-    grid-template-rows: auto 1fr auto;
+      calc(1rem + env(safe-area-inset-top))
+      1rem
+      calc(1rem + env(safe-area-inset-bottom));
   }
   .auth-top,
   .auth-main,
@@ -1357,61 +1355,63 @@ button.linkish {
     max-width: 100%;
   }
   .auth-top {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    padding: 0 0 0.5rem;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-bottom: 0.5rem;
   }
-  .auth-top-note { display: none; }
-  .auth-brand strong { font-size: 0.95rem; }
-  .auth-brand span { font-size: 0.72rem; }
-  .auth-intro { display: none; }
   .auth-main {
-    grid-template-areas: "form";
-    align-content: center;
-    padding: 0.25rem 0;
+    grid-template-areas: "intro" "form";
+    gap: 1.35rem;
+    padding: 0.5rem 0 1rem;
   }
-  .auth-field input,
-  .auth-eye,
-  .auth-submit,
-  .auth-chip {
-    font-size: 16px;
+  .auth-intro { display: block; }
+  .auth-intro h1 {
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+    word-break: break-word;
+  }
+  .auth-kicker { margin-bottom: 0.65rem; }
+  .auth-lead {
+    margin-top: 0.85rem;
+    font-size: 0.95rem;
+    max-width: none;
+  }
+  .auth-points {
+    display: grid;
+    margin-top: 1.15rem;
+    gap: 0.55rem;
+  }
+  .auth-points li { font-size: 0.88rem; }
+  .auth-form {
+    margin: 0;
+    width: 100%;
+    padding: 1.35rem 1.15rem 1.15rem;
   }
   .auth-field input,
   .auth-eye,
   .auth-submit {
     min-height: 48px;
+    font-size: 16px;
   }
   .auth-demo-row {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
   }
   .auth-chip {
-    width: 100%;
-    min-height: 42px;
-    padding: 0.45rem 0.35rem;
-    border-radius: 12px;
+    min-height: 40px;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
     font-size: 0.84rem;
   }
   .auth-foot {
     flex-direction: column;
-    gap: 0.15rem;
-    font-size: 0.72rem;
-    padding-top: 0.5rem;
-  }
-  .auth-glow-a,
-  .auth-glow-b {
-    width: 240px;
-    height: 240px;
-    filter: blur(28px);
-    opacity: 0.55;
+    gap: 0.25rem;
+    font-size: 0.78rem;
   }
 }
 
 @media (max-width: 420px) {
   .quick-links { grid-template-columns: 1fr; }
   .brand { font-size: 0.95rem; }
-  .auth-demo-row { grid-template-columns: 1fr; }
 }
