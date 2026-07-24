@@ -1,5 +1,18 @@
 window.Brayn = window.Brayn || {};
 
+(function syncCompactUi() {
+  const apply = () => {
+    const width = Math.min(window.innerWidth || 9999, screen.width || 9999);
+    const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    const compact = width <= 926 || (coarse && (screen.width || 0) <= 926);
+    document.documentElement.classList.toggle('is-compact', compact);
+    document.documentElement.classList.toggle('is-desktop', !compact);
+  };
+  apply();
+  window.addEventListener('resize', apply);
+  window.addEventListener('orientationchange', apply);
+})();
+
 Brayn.escapeHtml = function escapeHtml(value) {
   return String(value ?? '')
     .replace(/&/g, '&amp;')

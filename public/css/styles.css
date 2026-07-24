@@ -76,43 +76,78 @@ button, input, select, textarea { font: inherit; font-size: 16px; }
   min-width: 0;
 }
 
-/* Top bar */
+/* Top bar — compact/phone layout is the default */
 .topbar {
   position: sticky;
   top: 0;
   z-index: 30;
   border-bottom: 1px solid var(--line);
-  background: rgba(245, 248, 246, 0.86);
+  background: rgba(245, 248, 246, 0.94);
   backdrop-filter: blur(16px) saturate(1.2);
   padding-top: env(safe-area-inset-top);
 }
 .topbar-inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "brand actions"
+    "search search";
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  min-height: 68px;
-  flex-wrap: wrap;
+  gap: 0.5rem 0.45rem;
+  min-height: 0;
+  padding: 0.65rem 0 0.7rem;
 }
 .topbar-actions {
+  grid-area: actions;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  margin-left: auto;
+  gap: 0.4rem;
+  margin-left: 0;
   flex-shrink: 0;
 }
 .global-search {
+  grid-area: search;
   position: relative;
-  flex: 1 1 180px;
-  max-width: 280px;
-  min-width: 140px;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  flex: none;
 }
-.mobile-drawer { display: none; }
+.topbar-inner .nav-links,
+.topbar-auth {
+  display: none !important;
+}
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  min-width: 64px;
+}
+.mobile-drawer {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 70;
+  width: min(300px, 86vw);
+  height: 100dvh;
+  margin: 0;
+  padding: calc(0.9rem + env(safe-area-inset-top)) 1rem calc(1rem + env(safe-area-inset-bottom));
+  border-left: 1px solid var(--line);
+  background: #f7faf8;
+  box-shadow: -18px 0 40px rgba(16, 36, 28, 0.16);
+  transform: translateX(105%);
+  transition: transform 0.28s var(--ease);
+  overflow: auto;
+}
+.mobile-drawer.open { transform: translateX(0); }
 .global-search input {
   width: 100%;
   border-radius: 999px;
-  padding: 0.6rem 0.9rem;
-  font-size: 1rem;
+  padding: 0.65rem 0.95rem;
+  font-size: 16px;
   background: rgba(255,255,255,0.85);
 }
 .search-results {
@@ -173,7 +208,6 @@ a.alert-item { color: inherit; transition: border-color 0.18s var(--ease), trans
 a.alert-item:hover { border-color: rgba(12, 107, 77, 0.35); transform: translateY(-1px); }
 
 .nav-toggle {
-  display: none;
   border: 1px solid var(--line-strong);
   background: #fff;
   color: var(--ink-soft);
@@ -287,80 +321,109 @@ a.alert-item:hover { border-color: rgba(12, 107, 77, 0.35); transform: translate
   cursor: pointer;
 }
 .nav-auth { display: none; }
-.nav-toggle { display: none; }
-
-@media (max-width: 900px) {
-  .nav-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 40px;
-    min-width: 64px;
-  }
-  .topbar-inner .nav-links { display: none !important; }
-  .topbar-auth { display: none !important; }
-
-  .mobile-drawer {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 70;
-    width: min(300px, 86vw);
-    height: 100dvh;
-    margin: 0;
-    padding: calc(0.9rem + env(safe-area-inset-top)) 1rem calc(1rem + env(safe-area-inset-bottom));
-    border-left: 1px solid var(--line);
-    background: #f7faf8;
-    box-shadow: -18px 0 40px rgba(16, 36, 28, 0.16);
-    transform: translateX(105%);
-    transition: transform 0.28s var(--ease);
-    overflow: auto;
-  }
-  .mobile-drawer.open { transform: translateX(0); }
-  .mobile-drawer-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-  .mobile-drawer-nav a {
-    display: block;
-    width: 100%;
-    border-radius: 12px;
-    padding: 0.85rem 0.95rem;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--ink-soft);
-  }
-  .mobile-drawer-nav a.active {
-    background: var(--brand-deep);
-    color: #f4faf7;
-  }
-  .mobile-drawer .nav-auth {
-    display: flex;
-    width: 100%;
-    margin-top: auto;
-    padding-top: 0.85rem;
-    border-top: 1px solid var(--line);
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+.mobile-drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.mobile-drawer-nav a {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  padding: 0.85rem 0.95rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.mobile-drawer-nav a.active {
+  background: var(--brand-deep);
+  color: #f4faf7;
+}
+.mobile-drawer .nav-auth {
+  display: flex;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 .brand {
+  grid-area: brand;
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
   font-family: var(--display);
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   letter-spacing: -0.02em;
   color: var(--brand-deep);
   min-width: 0;
 }
 .brand-text { white-space: nowrap; }
+.brand-text span { display: none; }
+
+/* Desktop shell — only when JS marks a real desktop viewport */
+@media (min-width: 901px) {
+  html.is-desktop .topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 68px;
+    flex-wrap: wrap;
+    padding: 0;
+    grid-template-areas: none;
+  }
+  html.is-desktop .brand { grid-area: auto; }
+  html.is-desktop .brand-text span { display: inline; }
+  html.is-desktop .topbar-actions {
+    grid-area: auto;
+    margin-left: auto;
+  }
+  html.is-desktop .global-search {
+    grid-area: auto;
+    flex: 1 1 180px;
+    max-width: 280px;
+    min-width: 140px;
+    width: auto;
+  }
+  html.is-desktop .topbar-inner .nav-links { display: flex !important; }
+  html.is-desktop .topbar-auth { display: flex !important; }
+  html.is-desktop .nav-toggle { display: none !important; }
+  html.is-desktop .mobile-drawer { display: none !important; }
+  html.is-desktop .kpi-row { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Keep phones compact even when a stale viewport reports a wide layout */
+html.is-compact .topbar-inner {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-areas:
+    "brand actions"
+    "search search" !important;
+  min-height: 0 !important;
+  padding: 0.65rem 0 0.7rem !important;
+}
+html.is-compact .brand { grid-area: brand !important; }
+html.is-compact .brand-text span { display: none !important; }
+html.is-compact .topbar-actions {
+  grid-area: actions !important;
+  margin-left: 0 !important;
+}
+html.is-compact .global-search {
+  grid-area: search !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  flex: none !important;
+}
+html.is-compact .topbar-inner .nav-links,
+html.is-compact .topbar-auth { display: none !important; }
+html.is-compact .nav-toggle { display: inline-flex !important; }
+html.is-compact .mobile-drawer { display: flex !important; }
 .brand-mark {
   width: 30px;
   height: 30px;
@@ -472,13 +535,38 @@ main.page {
   font-size: 0.92rem;
 }
 
-/* KPIs */
+/* KPIs — 2-up on phones by default */
 .kpi-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.95rem;
-  margin-bottom: 1.35rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
 }
+html.is-compact .kpi-row {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+}
+html.is-compact .kpi {
+  padding: 0.75rem 0.7rem;
+}
+html.is-compact .kpi strong { font-size: 1rem; }
+html.is-compact .kpi span { font-size: 0.72rem; }
+html.is-compact main.page { padding: 0.85rem 0 4.5rem; }
+html.is-compact .page-header { margin-bottom: 0.75rem; }
+html.is-compact .page-header h1 { font-size: 1.3rem; }
+html.is-compact .lede {
+  font-size: 0.88rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+html.is-compact .panel {
+  padding: 0.9rem 0.8rem 0.85rem;
+  border-radius: 14px;
+}
+html.is-compact .layout-2,
+html.is-compact .quick-links { grid-template-columns: 1fr; }
 .kpi {
   position: relative;
   overflow: hidden;
