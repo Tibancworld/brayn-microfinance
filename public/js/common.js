@@ -88,10 +88,6 @@ Brayn.mountShell = function mountShell(active, user) {
           <span class="brand-mark" aria-hidden="true">B</span>
           <span class="brand-text">Brayn <span>Microfinance</span></span>
         </a>
-        <form class="global-search" id="globalSearchForm" role="search">
-          <input type="search" id="globalSearchInput" placeholder="Search…" autocomplete="off" enterkeyhint="search" />
-          <div class="search-results" id="globalSearchResults" hidden></div>
-        </form>
         <div class="topbar-actions">
           <div class="notify-wrap">
             <button type="button" class="notify-btn" id="notifyBtn" aria-label="Notifications">
@@ -102,21 +98,35 @@ Brayn.mountShell = function mountShell(active, user) {
           <div class="auth-slot topbar-auth" data-auth-slot></div>
           <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">Menu</button>
         </div>
-        <div class="nav-scrim" id="navScrim" hidden></div>
+        <form class="global-search" id="globalSearchForm" role="search">
+          <input type="search" id="globalSearchInput" placeholder="Search loans, customers…" autocomplete="off" enterkeyhint="search" />
+          <div class="search-results" id="globalSearchResults" hidden></div>
+        </form>
         <nav class="nav-links" id="mainNav" aria-label="Main">
-          <div class="nav-drawer-head">
-            <strong>Menu</strong>
-            <button type="button" class="nav-close" id="navClose" aria-label="Close menu">Close</button>
-          </div>
           ${links
             .map(
               (link) =>
                 `<a href="${link.href}" class="${link.key === active ? 'active' : ''}">${link.label}</a>`
             )
             .join('')}
-          <div class="auth-slot nav-auth" data-auth-slot></div>
         </nav>
       </div>
+      <div class="nav-scrim" id="navScrim" hidden></div>
+      <aside class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+        <div class="nav-drawer-head">
+          <strong>Menu</strong>
+          <button type="button" class="nav-close" id="navClose" aria-label="Close menu">Close</button>
+        </div>
+        <nav class="mobile-drawer-nav" id="mobileNav" aria-label="Mobile">
+          ${links
+            .map(
+              (link) =>
+                `<a href="${link.href}" class="${link.key === active ? 'active' : ''}">${link.label}</a>`
+            )
+            .join('')}
+        </nav>
+        <div class="auth-slot nav-auth" data-auth-slot></div>
+      </aside>
     </header>
   `;
 
@@ -129,22 +139,23 @@ Brayn.mountShell = function mountShell(active, user) {
 Brayn.bindMobileNav = function bindMobileNav() {
   const toggle = document.getElementById('navToggle');
   const closeBtn = document.getElementById('navClose');
-  const nav = document.getElementById('mainNav');
+  const drawer = document.getElementById('mobileDrawer');
   const scrim = document.getElementById('navScrim');
-  if (!toggle || !nav) return;
+  if (!toggle || !drawer) return;
 
   const setOpen = (open) => {
-    nav.classList.toggle('open', open);
+    drawer.classList.toggle('open', open);
     document.body.classList.toggle('nav-open', open);
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
     toggle.textContent = open ? 'Close' : 'Menu';
     if (scrim) scrim.hidden = !open;
   };
 
-  toggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+  toggle.addEventListener('click', () => setOpen(!drawer.classList.contains('open')));
   closeBtn?.addEventListener('click', () => setOpen(false));
   scrim?.addEventListener('click', () => setOpen(false));
-  nav.querySelectorAll('a').forEach((link) => {
+  drawer.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => setOpen(false));
   });
   window.addEventListener('keydown', (event) => {

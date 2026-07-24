@@ -1280,7 +1280,17 @@ app.get(
   })
 );
 
-app.use(express.static(PUBLIC_DIR, { index: false, extensions: ['html'] }));
+app.use(
+  express.static(PUBLIC_DIR, {
+    index: false,
+    extensions: ['html'],
+    setHeaders(res, filePath) {
+      if (/\.(css|js)$/i.test(filePath)) {
+        res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+      }
+    },
+  })
+);
 app.use('/api', (_req, res) => res.status(404).json({ error: 'API route not found' }));
 app.use((err, _req, res, _next) => {
   const status = err.status || 500;
