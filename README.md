@@ -28,7 +28,7 @@ Locally (and when `ENABLE_DEMO_LOGINS=true`):
 | `officer` | `officer123` | Loans, customers, approvals |
 | `teller` | `teller123` | View data + record payments |
 
-On Render, use the **Admin** chip on `/login` (it fills the live `ADMIN_PASSWORD`) or the password from the service env vars.
+On Render (with demo logins enabled), Admin / Officer / Teller chips use `password123`, `officer123`, and `teller123`.
 
 ## What is included
 

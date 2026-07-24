@@ -17,7 +17,7 @@ services:
       - key: ADMIN_USERNAME
         value: admin
       - key: ADMIN_PASSWORD
-        generateValue: true
+        value: password123
       - key: ENABLE_DEMO_LOGINS
         value: 'true'
       - key: APP_URL
