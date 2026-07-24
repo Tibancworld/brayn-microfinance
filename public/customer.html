@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer | Brayn Microfinance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-app-shell></div>
+      <main class="page">
+        <div class="container stack">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Customer profile</p>
+              <h1 id="customerTitle">Customer</h1>
+              <p class="lede" id="customerSubtitle">Loading profile…</p>
+            </div>
+            <div class="inline-actions">
+              <a class="btn btn-secondary" href="/customers.html">Back</a>
+              <a class="btn btn-primary" id="customerPayLink" href="/payments.html">Record payment</a>
+              <a class="btn btn-secondary" id="customerLoanLink" href="/index.html">New loan</a>
+            </div>
+          </header>
+
+          <section class="kpi-row">
+            <article class="kpi"><strong id="c-loans">—</strong><span>Loans</span></article>
+            <article class="kpi"><strong id="c-outstanding">—</strong><span>Outstanding</span></article>
+            <article class="kpi"><strong id="c-paid">—</strong><span>Settled payments</span></article>
+            <article class="kpi"><strong id="c-status">—</strong><span>Status</span></article>
+          </section>
+
+          <section class="layout-2">
+            <article class="panel">
+              <div class="panel-title"><h2>Profile</h2></div>
+              <div class="alert-list" id="profileList"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-title"><h2>Loans</h2></div>
+              <div class="table-wrap">
+                <table class="data-table" id="customerLoansTable">
+                  <thead>
+                    <tr><th>Loan</th><th>Product</th><th>Outstanding</th><th>Status</th></tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title"><h2>Recent payments</h2></div>
+            <div class="table-wrap">
+              <table class="data-table" id="customerPaymentsTable">
+                <thead>
+                  <tr><th>ID</th><th>Loan</th><th>Channel</th><th>Amount</th><th>Status</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </main>
+      <footer class="footer container">© 2026 Brayn Microfinance</footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="/js/customer-detail.js"></script>
+  </body>
+</html>

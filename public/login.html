@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in | Brayn Microfinance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body class="auth-page">
+    <div class="auth-stage">
+      <div class="auth-glow auth-glow-a" aria-hidden="true"></div>
+      <div class="auth-glow auth-glow-b" aria-hidden="true"></div>
+      <div class="auth-grain" aria-hidden="true"></div>
+
+      <header class="auth-top">
+        <div class="auth-brand">
+          <span class="auth-mark" aria-hidden="true">B</span>
+          <div>
+            <strong>Brayn Microfinance</strong>
+            <span>Staff workspace</span>
+          </div>
+        </div>
+        <p class="auth-top-note">Kenya lending operations</p>
+      </header>
+
+      <main class="auth-main">
+        <section class="auth-intro">
+          <p class="auth-kicker">Secure branch access</p>
+          <h1>Brayn<br /><em>Microfinance</em></h1>
+          <p class="auth-lead">
+            One desk for applications, approvals, repayment schedules, and collections.
+          </p>
+          <ul class="auth-points">
+            <li><span>01</span> Loan ledger & EMI schedules</li>
+            <li><span>02</span> M-Pesa and bank collections</li>
+            <li><span>03</span> Arrears aging & branch reports</li>
+          </ul>
+        </section>
+
+        <section class="auth-form-shell" aria-label="Sign in">
+          <form id="loginForm" class="auth-form">
+            <div class="auth-form-head">
+              <h2>Sign in</h2>
+              <p>Use your staff username and password.</p>
+            </div>
+
+            <label class="auth-field">
+              <span>Username</span>
+              <input type="text" name="username" autocomplete="username" placeholder="e.g. admin" required />
+            </label>
+
+            <label class="auth-field">
+              <span>Password</span>
+              <div class="auth-password">
+                <input type="password" name="password" id="passwordInput" autocomplete="current-password" placeholder="Enter password" required />
+                <button type="button" class="auth-eye" id="togglePassword" aria-label="Show password">Show</button>
+              </div>
+            </label>
+
+            <button class="auth-submit" type="submit">Enter workspace</button>
+            <p id="loginMessage" class="auth-error" aria-live="polite"></p>
+
+            <div class="auth-demo">
+              <p>Quick demo access</p>
+              <div class="auth-demo-row">
+                <button type="button" class="auth-chip" data-user="admin" data-pass="password123">Admin</button>
+                <button type="button" class="auth-chip" data-user="officer" data-pass="officer123">Officer</button>
+                <button type="button" class="auth-chip" data-user="teller" data-pass="teller123">Teller</button>
+              </div>
+            </div>
+          </form>
+        </section>
+      </main>
+
+      <footer class="auth-foot">
+        <span>© 2026 Brayn Microfinance</span>
+        <span>Session-secured · Role-based access</span>
+      </footer>
+    </div>
+
+    <script src="/js/common.js"></script>
+    <script src="/js/login.js"></script>
+  </body>
+</html>

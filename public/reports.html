@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports | Brayn Microfinance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-app-shell></div>
+      <main class="page">
+        <div class="container stack">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Analytics</p>
+              <h1>Reports</h1>
+              <p class="lede">Outstanding balances, collections, and arrears aging.</p>
+            </div>
+            <div class="inline-actions">
+              <button type="button" class="btn btn-secondary" data-export="loans">Loans CSV</button>
+              <button type="button" class="btn btn-secondary" data-export="payments">Payments CSV</button>
+              <button type="button" class="btn btn-secondary" data-export="collections">Overdue CSV</button>
+            </div>
+          </header>
+
+          <section class="kpi-row">
+            <article class="kpi"><strong id="stat-portfolio">—</strong><span>Outstanding book</span></article>
+            <article class="kpi"><strong id="stat-repayment">—</strong><span>Collections coverage</span></article>
+            <article class="kpi"><strong id="stat-delinquent">—</strong><span>Delinquent accounts</span></article>
+            <article class="kpi"><strong id="stat-overdue">—</strong><span>Overdue installments</span></article>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title"><h2>Arrears aging</h2></div>
+            <div class="report-grid" id="agingCards"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title"><h2>By branch</h2></div>
+            <div class="report-grid" id="branchCards"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title"><h2>By product</h2></div>
+            <div class="report-grid" id="summaryCards"></div>
+          </section>
+
+          <section class="layout-2">
+            <article class="panel">
+              <div class="panel-title"><h2>By channel</h2></div>
+              <div class="report-grid" id="channelCards" style="grid-template-columns: 1fr;"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-title"><h2>By status</h2></div>
+              <div class="report-grid" id="statusCards" style="grid-template-columns: 1fr;"></div>
+            </article>
+          </section>
+        </div>
+      </main>
+      <footer class="footer container">© 2026 Brayn Microfinance</footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="/js/reports.js"></script>
+  </body>
+</html>

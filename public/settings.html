@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings | Brayn Microfinance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-app-shell></div>
+      <main class="page">
+        <div class="container stack">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Administration</p>
+              <h1>Settings</h1>
+              <p class="lede">Staff users, password change, database backup, and audit history.</p>
+            </div>
+            <button type="button" class="btn btn-secondary" id="exportAudit">Export audit CSV</button>
+          </header>
+
+          <section class="layout-2">
+            <article class="panel">
+              <div class="panel-title"><h2>Create staff user</h2></div>
+              <form id="userForm" class="form-grid">
+                <label>Username<input type="text" name="username" required /></label>
+                <label>Role
+                  <select name="role">
+                    <option value="officer">Officer</option>
+                    <option value="teller">Teller</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </label>
+                <label class="full">Password<input type="password" name="password" minlength="8" required /></label>
+                <button class="btn btn-primary full" type="submit">Create user</button>
+              </form>
+              <p id="userMessage" class="success-text" aria-live="polite"></p>
+            </article>
+
+            <article class="panel">
+              <div class="panel-title"><h2>Change my password</h2></div>
+              <form id="passwordForm" class="form-grid">
+                <label class="full">Current password<input type="password" name="currentPassword" required /></label>
+                <label class="full">New password<input type="password" name="newPassword" minlength="8" required /></label>
+                <button class="btn btn-secondary full" type="submit">Update password</button>
+              </form>
+              <p id="passwordMessage" class="success-text" aria-live="polite"></p>
+            </article>
+          </section>
+
+          <section class="layout-2">
+            <article class="panel">
+              <div class="panel-title"><h2>Staff directory</h2></div>
+              <div class="table-wrap">
+                <table class="data-table" id="userTable">
+                  <thead>
+                    <tr><th>Username</th><th>Role</th><th>Active</th><th>Actions</th></tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-title">
+                <h2>Database backup</h2>
+                <button type="button" class="btn btn-primary btn-compact" id="backupBtn">Create backup</button>
+              </div>
+              <p class="tiny-note">Copies `data/brayn.db` into `data/backups/`.</p>
+              <p id="backupMessage" class="success-text" aria-live="polite"></p>
+              <div class="table-wrap" style="margin-top: 0.75rem;">
+                <table class="data-table" id="backupTable">
+                  <thead>
+                    <tr><th>File</th><th>Size</th><th>Created</th></tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title"><h2>Recent audit log</h2></div>
+            <div class="table-wrap">
+              <table class="data-table" id="auditTable">
+                <thead>
+                  <tr><th>When</th><th>User</th><th>Action</th><th>Entity</th><th>Details</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </main>
+      <footer class="footer container">© 2026 Brayn Microfinance</footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="/js/settings.js"></script>
+  </body>
+</html>

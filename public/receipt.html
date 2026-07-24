@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment receipt | Brayn Microfinance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-app-shell class="no-print"></div>
+      <main class="page">
+        <div class="container stack">
+          <header class="page-header no-print">
+            <div>
+              <p class="eyebrow">Collections</p>
+              <h1>Payment receipt</h1>
+              <p class="lede">Printable acknowledgment for branch and customer records.</p>
+            </div>
+            <div class="inline-actions">
+              <a class="btn btn-secondary" href="/payments.html">Back</a>
+              <button type="button" class="btn btn-primary" id="printBtn">Print</button>
+            </div>
+          </header>
+
+          <section class="panel doc-card" id="receiptCard">
+            <div class="doc-letterhead">
+              <div>
+                <strong>Brayn Microfinance</strong>
+                <span>Official payment receipt</span>
+              </div>
+              <div class="doc-meta">
+                <span id="receiptTitle">Loading…</span>
+                <span id="receiptDate"></span>
+              </div>
+            </div>
+            <div class="alert-list" id="receiptDetails"></div>
+            <p class="tiny-note doc-footer-note">Keep this receipt for your records. Settled amounts are applied to the oldest unpaid installments.</p>
+          </section>
+        </div>
+      </main>
+      <footer class="footer container no-print">© 2026 Brayn Microfinance</footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="/js/receipt.js"></script>
+  </body>
+</html>

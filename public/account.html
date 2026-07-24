@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account | Brayn Microfinance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-app-shell></div>
+      <main class="page">
+        <div class="container stack">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Profile</p>
+              <h1>My account</h1>
+              <p class="lede">Update your sign-in password.</p>
+            </div>
+          </header>
+          <section class="panel" style="max-width: 520px;">
+            <div class="panel-title"><h2>Change password</h2></div>
+            <form id="passwordForm" class="form-grid">
+              <label class="full">Current password<input type="password" name="currentPassword" required /></label>
+              <label class="full">New password<input type="password" name="newPassword" minlength="8" required /></label>
+              <button class="btn btn-primary full" type="submit">Save password</button>
+            </form>
+            <p id="passwordMessage" class="success-text" aria-live="polite"></p>
+          </section>
+        </div>
+      </main>
+      <footer class="footer container">© 2026 Brayn Microfinance</footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        const user = await Brayn.requireSession();
+        if (!user) return;
+        Brayn.mountShell('account', user);
+        const form = document.getElementById('passwordForm');
+        const message = document.getElementById('passwordMessage');
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          message.className = 'success-text';
+          message.textContent = '';
+          const data = new FormData(form);
+          try {
+            await Brayn.api('/api/auth/password', {
+              method: 'POST',
+              body: JSON.stringify({
+                currentPassword: data.get('currentPassword'),
+                newPassword: data.get('newPassword'),
+              }),
+            });
+            message.textContent = 'Password updated.';
+            form.reset();
+          } catch (error) {
+            message.className = 'error-text';
+            message.textContent = error.message;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

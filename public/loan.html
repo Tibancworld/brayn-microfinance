@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loan detail | Brayn Microfinance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-app-shell></div>
+      <main class="page">
+        <div class="container stack">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Loan ledger</p>
+              <h1 id="loanTitle">Loan detail</h1>
+              <p class="lede" id="loanSubtitle">Loading schedule and balances…</p>
+            </div>
+            <div class="inline-actions">
+              <a class="btn btn-secondary" href="/loans.html">Back to loans</a>
+              <a class="btn btn-primary" id="statementLink" href="#">Print statement</a>
+              <a class="btn btn-secondary" id="payLoanLink" href="/payments.html" hidden>Full payment form</a>
+              <span id="loanWorkflow" class="inline-actions" hidden></span>
+              <button type="button" class="btn btn-danger" id="closeLoanBtn" hidden>Close loan</button>
+            </div>
+          </header>
+
+          <section class="kpi-row">
+            <article class="kpi"><strong id="stat-principal">—</strong><span>Principal</span></article>
+            <article class="kpi"><strong id="stat-outstanding">—</strong><span>Outstanding</span></article>
+            <article class="kpi"><strong id="stat-paid">—</strong><span>Paid</span></article>
+            <article class="kpi"><strong id="stat-dpd">—</strong><span>Days past due</span></article>
+          </section>
+
+          <section class="layout-2">
+            <article class="panel" id="loanEditPanel" hidden>
+              <div class="panel-title"><h2>Loan details</h2></div>
+              <form id="loanEditForm" class="form-grid">
+                <label>Branch<input type="text" name="branch" /></label>
+                <label>Officer<input type="text" name="officer" /></label>
+                <label class="full">Notes<textarea name="notes" rows="3"></textarea></label>
+                <button class="btn btn-secondary" type="submit">Save details</button>
+              </form>
+              <p id="loanEditMessage" class="success-text" aria-live="polite"></p>
+            </article>
+
+            <article class="panel" id="quickPayPanel" hidden>
+              <div class="panel-title">
+                <h2>Record repayment</h2>
+                <p>Posts to this loan and allocates to the oldest unpaid installments</p>
+              </div>
+              <form id="quickPayForm" class="form-grid">
+                <label>Amount (KES)<input type="number" name="amount" min="1" step="0.01" required /></label>
+                <label>Channel
+                  <select name="channel">
+                    <option>M-Pesa</option>
+                    <option>Paybill</option>
+                    <option>Bank transfer</option>
+                    <option>Cash</option>
+                  </select>
+                </label>
+                <label class="full">Reference<input type="text" name="reference" placeholder="MPESA code or slip no." /></label>
+                <button class="btn btn-primary full" type="submit">Post payment</button>
+              </form>
+              <p id="quickPayMessage" class="success-text" aria-live="polite"></p>
+            </article>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title">
+              <h2>Repayment schedule</h2>
+              <p id="loanMeta">EMI and installment status</p>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table" id="scheduleTable">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Due date</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Amount due</th>
+                    <th>Paid</th>
+                    <th>Penalty</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title"><h2>Payments on this loan</h2></div>
+            <div class="table-wrap">
+              <table class="data-table" id="loanPaymentsTable">
+                <thead>
+                  <tr><th>ID</th><th>Channel</th><th>Amount</th><th>Reference</th><th>Status</th><th>Date</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </main>
+      <footer class="footer container">© 2026 Brayn Microfinance</footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="/js/loan-detail.js"></script>
+  </body>
+</html>

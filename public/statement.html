@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loan statement | Brayn Microfinance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-app-shell class="no-print"></div>
+      <main class="page">
+        <div class="container stack">
+          <header class="page-header no-print">
+            <div>
+              <p class="eyebrow">Documents</p>
+              <h1>Loan statement</h1>
+              <p class="lede">Printable customer statement for branch records.</p>
+            </div>
+            <div class="inline-actions">
+              <a class="btn btn-secondary" id="backLink" href="/loans.html">Back</a>
+              <button type="button" class="btn btn-primary" id="printBtn">Print</button>
+            </div>
+          </header>
+
+          <section class="panel doc-card" id="statementCard">
+            <div class="doc-letterhead">
+              <div>
+                <strong>Brayn Microfinance</strong>
+                <span>Loan account statement</span>
+              </div>
+              <div class="doc-meta">
+                <span id="stmtTitle">Loading…</span>
+                <span id="stmtDate"></span>
+              </div>
+            </div>
+            <p class="muted" id="stmtMeta"></p>
+            <div class="kpi-row">
+              <article class="kpi"><strong id="stmtPrincipal">—</strong><span>Principal</span></article>
+              <article class="kpi"><strong id="stmtPaid">—</strong><span>Paid</span></article>
+              <article class="kpi"><strong id="stmtOutstanding">—</strong><span>Outstanding</span></article>
+              <article class="kpi"><strong id="stmtStatus">—</strong><span>Status</span></article>
+            </div>
+            <div class="table-wrap" style="margin-top: 1rem;">
+              <h3 class="doc-section-title">Repayment schedule</h3>
+              <table class="data-table" id="stmtSchedule">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Due date</th>
+                    <th>Amount due</th>
+                    <th>Paid</th>
+                    <th>Penalty</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="table-wrap" style="margin-top: 1.25rem;">
+              <h3 class="doc-section-title">Payment history</h3>
+              <table class="data-table" id="stmtPayments">
+                <thead>
+                  <tr>
+                    <th>Receipt</th>
+                    <th>Date</th>
+                    <th>Channel</th>
+                    <th>Reference</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <p class="tiny-note doc-footer-note">This statement is generated from live branch records. Contact your officer for clarifications.</p>
+          </section>
+        </div>
+      </main>
+      <footer class="footer container no-print">© 2026 Brayn Microfinance</footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="/js/statement.js"></script>
+  </body>
+</html>

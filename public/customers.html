@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customers | Brayn Microfinance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-app-shell></div>
+      <main class="page">
+        <div class="container stack">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Directory</p>
+              <h1>Customers</h1>
+              <p class="lede">Profiles, guarantors, collateral, and branch assignment.</p>
+            </div>
+            <button type="button" class="btn btn-secondary" id="exportCustomers">Export CSV</button>
+          </header>
+
+          <section class="kpi-row">
+            <article class="kpi"><strong id="stat-active">—</strong><span>Active customers</span></article>
+            <article class="kpi"><strong id="stat-total">—</strong><span>Total records</span></article>
+            <article class="kpi"><strong id="stat-new">—</strong><span>New intake</span></article>
+            <article class="kpi"><strong id="stat-loans">—</strong><span>Linked loans</span></article>
+          </section>
+
+          <section class="layout-2">
+            <article class="panel" id="customerFormPanel">
+              <div class="panel-title"><h2>Add customer</h2></div>
+              <form id="customerForm" class="form-grid">
+                <label>Full name<input type="text" name="name" required /></label>
+                <label>Phone<input type="tel" name="phone" /></label>
+                <label>Email<input type="email" name="email" /></label>
+                <label>National ID<input type="text" name="nationalId" /></label>
+                <label>Branch<input type="text" name="branch" value="Main" /></label>
+                <label>Product interest
+                  <select name="product">
+                    <option value="">Select product</option>
+                    <option>Title deed</option>
+                    <option>Motor vehicle</option>
+                    <option>Salary advance</option>
+                    <option>Check-off</option>
+                    <option>Non check-off</option>
+                    <option>Share-backed</option>
+                  </select>
+                </label>
+                <label>Guarantor name<input type="text" name="guarantorName" /></label>
+                <label>Guarantor phone<input type="tel" name="guarantorPhone" /></label>
+                <label class="full">Collateral<textarea name="collateral" rows="2" placeholder="Title deed, vehicle logbook, etc."></textarea></label>
+                <label>Status
+                  <select name="status">
+                    <option>New</option>
+                    <option>Active</option>
+                    <option>Approved</option>
+                  </select>
+                </label>
+                <button class="btn btn-primary full" type="submit">Save customer</button>
+              </form>
+              <p id="customerMessage" class="success-text" aria-live="polite"></p>
+            </article>
+
+            <article class="panel">
+              <div class="panel-title"><h2>Customer list</h2></div>
+              <form id="customerFilters" class="toolbar">
+                <input type="search" id="customerSearch" placeholder="Search name, phone, or ID" />
+                <button class="btn btn-secondary" type="submit">Search</button>
+              </form>
+              <div class="table-wrap" style="margin-top: 0.85rem;">
+                <table class="data-table" id="customerTable">
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Phone</th>
+                      <th>Branch</th>
+                      <th>Guarantor</th>
+                      <th>Collateral</th>
+                      <th>Status</th>
+                      <th>Loans</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <div id="customerPager"></div>
+            </article>
+          </section>
+        </div>
+      </main>
+      <footer class="footer container">© 2026 Brayn Microfinance</footer>
+    </div>
+
+    <div class="modal-backdrop" id="editModal" hidden>
+      <div class="modal">
+        <div class="panel-title"><h2>Edit customer</h2></div>
+        <form id="editCustomerForm" class="form-grid">
+          <input type="hidden" name="id" />
+          <label>Full name<input type="text" name="name" required /></label>
+          <label>Phone<input type="tel" name="phone" /></label>
+          <label>Email<input type="email" name="email" /></label>
+          <label>National ID<input type="text" name="nationalId" /></label>
+          <label>Branch<input type="text" name="branch" /></label>
+          <label>Product<input type="text" name="product" /></label>
+          <label>Guarantor name<input type="text" name="guarantorName" /></label>
+          <label>Guarantor phone<input type="tel" name="guarantorPhone" /></label>
+          <label class="full">Collateral<textarea name="collateral" rows="2"></textarea></label>
+          <label>Status
+            <select name="status">
+              <option>New</option>
+              <option>Active</option>
+              <option>Approved</option>
+              <option>Inactive</option>
+              <option>Suspended</option>
+            </select>
+          </label>
+          <div class="modal-actions full">
+            <button type="button" class="btn btn-secondary" id="closeEditModal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+        <p id="editMessage" class="success-text" aria-live="polite"></p>
+      </div>
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="/js/customers.js"></script>
+  </body>
+</html>

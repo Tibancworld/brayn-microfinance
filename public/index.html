@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Brayn Microfinance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-app-shell></div>
+      <main class="page">
+        <div class="container">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Overview</p>
+              <h1>Your lending desk</h1>
+              <p class="lede">Live portfolio snapshot, quick applications, and everything your branch needs today.</p>
+            </div>
+          </header>
+
+          <section class="kpi-row">
+            <article class="kpi"><strong id="portfolio-value">—</strong><span>Outstanding book</span></article>
+            <article class="kpi"><strong id="disbursed-value">—</strong><span>Disbursed principal</span></article>
+            <article class="kpi"><strong id="repayment-rate">—</strong><span>Collections coverage</span></article>
+            <article class="kpi"><strong id="delinquent-count">—</strong><span>Delinquent accounts</span></article>
+          </section>
+
+          <section class="layout-2" style="margin-bottom: 1rem;">
+            <article class="panel">
+              <div class="panel-title">
+                <h2>Due in 7 days</h2>
+                <p><a href="/collections.html?type=dueSoon">View all</a></p>
+              </div>
+              <div class="alert-list" id="dueSoonList">
+                <div class="alert-item"><strong>Loading…</strong><span>Checking installments</span></div>
+              </div>
+            </article>
+            <article class="panel">
+              <div class="panel-title">
+                <h2>Overdue installments</h2>
+                <p><a href="/collections.html?type=overdue">View all</a></p>
+              </div>
+              <div class="alert-list" id="overdueList">
+                <div class="alert-item overdue"><strong>Loading…</strong><span>Checking arrears</span></div>
+              </div>
+            </article>
+          </section>
+
+          <section class="layout-2">
+            <article class="panel" id="loanFormPanel">
+              <div class="panel-title">
+                <h2>New loan application</h2>
+                <p>Creates the customer if they are new</p>
+              </div>
+              <form id="loanForm" class="form-grid">
+                <label>Full name<input type="text" name="name" placeholder="Jane Muthoni" required /></label>
+                <label>Phone<input type="tel" name="phone" placeholder="0712345678" /></label>
+                <label>Email<input type="email" name="email" placeholder="jane@example.com" /></label>
+                <label>Branch<input type="text" name="branch" value="Main" /></label>
+                <label>Product
+                  <select name="product">
+                    <option>Title deed</option>
+                    <option>Motor vehicle</option>
+                    <option>Salary advance</option>
+                    <option>Check-off</option>
+                    <option>Non check-off</option>
+                    <option>Share-backed</option>
+                  </select>
+                </label>
+                <label>Annual rate (%)<input type="number" name="rate" min="0" step="0.1" value="18" required /></label>
+                <label>Amount (KES)<input type="number" name="amount" min="1000" step="100" value="150000" required /></label>
+                <label>Months<input type="number" name="period" min="1" max="60" value="12" required /></label>
+                <label class="full">Notes<textarea name="notes" rows="3" placeholder="Collateral or affordability notes"></textarea></label>
+                <button class="btn btn-primary full" type="submit">Submit application</button>
+              </form>
+              <p id="formMessage" class="success-text" aria-live="polite"></p>
+            </article>
+
+            <div class="stack">
+              <article class="panel">
+                <div class="panel-title">
+                  <h2>Quick links</h2>
+                </div>
+                <div class="quick-links">
+                  <a class="quick-link" href="/loans.html"><strong>Loans</strong><span>Approve and manage applications</span></a>
+                  <a class="quick-link" href="/customers.html"><strong>Customers</strong><span>Profiles and contacts</span></a>
+                  <a class="quick-link" href="/collections.html"><strong>Collections</strong><span>Overdue queue and follow-ups</span></a>
+                  <a class="quick-link" href="/payments.html"><strong>Payments</strong><span>Record collections</span></a>
+                  <a class="quick-link" href="/reports.html"><strong>Reports</strong><span>Portfolio totals</span></a>
+                  <a class="quick-link" href="#calculator"><strong>EMI calculator</strong><span>Estimate monthly repayment</span></a>
+                </div>
+                <p class="tiny-note" id="dashboard-note">Loading metrics…</p>
+              </article>
+
+              <article class="panel" id="calculator">
+                <div class="panel-title">
+                  <h2>EMI calculator</h2>
+                </div>
+                <form id="emiForm" class="form-grid">
+                  <label>Principal (KES)<input type="number" id="principal" min="1000" step="100" value="150000" required /></label>
+                  <label>Annual rate (%)<input type="number" id="rate" min="0" step="0.1" value="18" required /></label>
+                  <label>Months<input type="number" id="months" min="1" max="60" value="12" required /></label>
+                  <button class="btn btn-secondary full" type="submit">Calculate</button>
+                </form>
+                <p id="emiResult" class="success-text" aria-live="polite"></p>
+              </article>
+            </div>
+          </section>
+
+          <section class="layout-2" style="margin-top: 1rem;">
+            <article class="panel">
+              <div class="panel-title">
+                <h2>Recent loans</h2>
+                <p><a href="/loans.html">View all</a></p>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table" id="recentLoansTable">
+                  <thead>
+                    <tr><th>Loan</th><th>Customer</th><th>Outstanding</th><th>Status</th></tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </article>
+            <article class="panel">
+              <div class="panel-title">
+                <h2>Recent payments</h2>
+                <p><a href="/payments.html">View all</a></p>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table" id="recentPaymentsTable">
+                  <thead>
+                    <tr><th>ID</th><th>Customer</th><th>Amount</th><th>Channel</th></tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+        </div>
+      </main>
+      <footer class="footer container">© 2026 Brayn Microfinance</footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>

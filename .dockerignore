@@ -1,0 +1,16 @@
+node_modules
+.venv
+venv
+.git
+.env
+*.db
+data/*.db
+data/backups
+.DS_Store
+Thumbs.db
+*.log
+.idea
+.vscode
+microfinance.txt
+agent-transcripts
+**/.cursor

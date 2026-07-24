@@ -1,0 +1,13 @@
+node_modules/
+.venv/
+venv/
+.env
+*.db
+data/*.db
+data/backups/
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+microfinance.txt

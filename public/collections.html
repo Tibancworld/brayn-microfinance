@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collections | Brayn Microfinance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-app-shell></div>
+      <main class="page">
+        <div class="container stack">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Follow-up</p>
+              <h1>Collections</h1>
+              <p class="lede">Overdue and upcoming installments with one-click payment links.</p>
+            </div>
+            <button type="button" class="btn btn-secondary" id="exportCollections">Export overdue CSV</button>
+          </header>
+
+          <section class="kpi-row">
+            <article class="kpi"><strong id="stat-queue">—</strong><span>In this queue</span></article>
+            <article class="kpi"><strong id="stat-owed">—</strong><span>Amount owed</span></article>
+            <article class="kpi"><strong id="stat-penalty">—</strong><span>Penalty estimate</span></article>
+            <article class="kpi"><strong id="stat-type">—</strong><span>Queue type</span></article>
+          </section>
+
+          <section class="panel">
+            <form id="collectionFilters" class="toolbar">
+              <select id="collectionType">
+                <option value="overdue">Overdue</option>
+                <option value="dueSoon">Due in 7 days</option>
+              </select>
+              <input type="search" id="collectionSearch" placeholder="Search customer, loan, product" />
+              <input type="text" id="collectionBranch" placeholder="Branch" />
+              <button class="btn btn-secondary" type="submit">Filter</button>
+            </form>
+            <div class="table-wrap" style="margin-top: 0.85rem;">
+              <table class="data-table" id="collectionTable">
+                <thead>
+                  <tr>
+                    <th>Due</th>
+                    <th>Customer</th>
+                    <th>Loan</th>
+                    <th>Inst.</th>
+                    <th>Owed</th>
+                    <th>Penalty</th>
+                    <th>DPD</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div id="collectionPager" class="pager"></div>
+          </section>
+        </div>
+      </main>
+      <footer class="footer container">© 2026 Brayn Microfinance</footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="/js/collections.js"></script>
+  </body>
+</html>

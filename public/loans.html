@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loans | Brayn Microfinance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-app-shell></div>
+      <main class="page">
+        <div class="container stack">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Lending</p>
+              <h1>Loans</h1>
+              <p class="lede" id="actionsNote">Review applications, balances, and schedules.</p>
+            </div>
+            <div class="inline-actions">
+              <button type="button" class="btn btn-secondary" id="exportLoans">Export CSV</button>
+              <a class="btn btn-primary" id="newLoanLink" href="/index.html">New application</a>
+            </div>
+          </header>
+
+          <section class="kpi-row">
+            <article class="kpi"><strong id="stat-pending">—</strong><span>Pending approvals</span></article>
+            <article class="kpi"><strong id="stat-disbursed">—</strong><span>Outstanding book</span></article>
+            <article class="kpi"><strong id="stat-collections">—</strong><span>Active loans</span></article>
+            <article class="kpi"><strong id="stat-delinquent">—</strong><span>Delinquent</span></article>
+          </section>
+
+          <section class="panel">
+            <form id="loanFilters" class="toolbar">
+              <input type="search" id="loanSearch" placeholder="Search customer, product, or ID" />
+              <select id="loanStatus">
+                <option value="">All statuses</option>
+                <option>Pending</option>
+                <option>Approved</option>
+                <option>Running</option>
+                <option>Delinquent</option>
+                <option>Defaulted</option>
+                <option>Closed</option>
+                <option>Rejected</option>
+              </select>
+              <input type="text" id="loanBranch" placeholder="Branch (e.g. Nairobi)" />
+              <button class="btn btn-secondary" type="submit">Filter</button>
+            </form>
+            <div class="table-wrap" style="margin-top: 0.85rem;">
+              <table class="data-table" id="loanTable">
+                <thead>
+                  <tr>
+                    <th>Loan</th>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Principal</th>
+                    <th>Outstanding</th>
+                    <th>Branch</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div id="loanPager"></div>
+          </section>
+        </div>
+      </main>
+      <footer class="footer container">© 2026 Brayn Microfinance</footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="/js/loans.js"></script>
+  </body>
+</html>
