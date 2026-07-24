@@ -15,9 +15,9 @@ RUN mkdir -p data/backups \
   && chown -R node:node /app
 
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=8080
 
 USER node
-EXPOSE 3000
+EXPOSE 8080
 
 CMD ["node", "server.js"]

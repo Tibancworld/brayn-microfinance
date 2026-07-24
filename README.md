@@ -67,8 +67,8 @@ Copy `.env.example` to `.env`:
 - `SESSION_SECRET`
 - `ADMIN_USERNAME` / `ADMIN_PASSWORD` (seed only if admin does not exist)
 - `NODE_ENV=production` for secure cookies
-- `APP_URL` (public URL, e.g. `https://myprototype.work`)
+- `APP_URL` (public URL, e.g. `https://www.myprototype.com`)
 
-## Deploy to myprototype.work
+## Deploy on Cloudflare (www.myprototype.com)
 
-See [DEPLOY.md](DEPLOY.md) for Render + Namecheap DNS steps.
+See [DEPLOY.md](DEPLOY.md). Tunnel `brayn-mf` is configured for `www.myprototype.com` → local port 3000. Point DNS as documented there, or upgrade Workers Paid and run `npm run cf:deploy` for always-on hosting.

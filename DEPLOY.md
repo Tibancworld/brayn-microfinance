@@ -1,62 +1,36 @@
-# Deploy Brayn Microfinance on myprototype.work
+# Always-on hosting (no PC tunnel)
 
-`myprototype.work` is a Namecheap domain (currently parked). The Node/SQLite app needs a host, then DNS points the domain at that host.
+Cloudflare **Containers** need a [Workers Paid](https://dash.cloudflare.com/?to=/:account/workers/plans) plan.  
+Until then, host on **Render** (runs in the cloud; your PC can be off).
 
-## 1. Push this repo to GitHub
+## Deploy on Render
 
-If the remote is not set yet:
+1. Push this repo to GitHub (already: `Tibancworld/brayn-microfinance`)
+2. Open [Render Blueprint](https://dashboard.render.com/select-repo?type=blueprint)
+3. Connect the repo → apply `render.yaml`
+4. After deploy, copy the URL: `https://brayn-microfinance.onrender.com`
+5. In Render → service → **Environment**, note generated `ADMIN_PASSWORD`
 
-```bash
-git init
-git add .
-git commit -m "Prepare production deploy for myprototype.work"
-gh repo create brayn-microfinance --private --source=. --remote=origin --push
-```
+## Point www.myprototype.work at Render
 
-## 2. Deploy on Render (recommended)
+In Cloudflare DNS for `myprototype.work` (**bblessking** account):
 
-1. Open [https://dashboard.render.com/select-repo?type=blueprint](https://dashboard.render.com/select-repo?type=blueprint)
-2. Connect the `brayn-microfinance` GitHub repo
-3. Apply `render.yaml` (Docker web service + 1 GB disk at `/app/data`)
-4. After the first deploy, open the Render service → **Environment** and copy:
-   - `ADMIN_PASSWORD` (auto-generated)
-   - Confirm `SESSION_SECRET` exists
-5. Note the temporary URL, e.g. `https://brayn-microfinance.onrender.com`
-
-## 3. Point myprototype.work at Render
-
-In Render → your service → **Settings → Custom Domains**:
-
-1. Add `myprototype.work`
-2. Add `www.myprototype.work` (optional)
-3. Copy the DNS target Render shows (usually something like `brayn-microfinance.onrender.com`)
-
-In **Namecheap → Domain List → myprototype.work → Advanced DNS**:
-
-| Type | Host | Value | TTL |
+| Type | Name | Content | Proxy |
 |---|---|---|---|
-| URL Redirect Record *(remove if present)* | `@` | delete parking redirect | — |
-| CNAME Record | `www` | `brayn-microfinance.onrender.com` | Automatic |
-| ALIAS / ANAME / CNAME Flattening* | `@` | `brayn-microfinance.onrender.com` | Automatic |
+| CNAME | `www` | `brayn-microfinance.onrender.com` | Proxied (orange) |
 
-\* Namecheap may not support ALIAS on `@`. If not:
+Remove the tunnel CNAME target (`*.cfargotunnel.com`).
 
-1. In Render, use the **A records** they list for the apex domain, **or**
-2. Redirect `@` → `https://www.myprototype.work` and put the CNAME only on `www`.
+Optional: Cloudflare SSL/TLS mode **Full**.
 
-Remove Namecheap parking / marketplace page records so they no longer serve the auction landing page.
+## Notes
 
-## 4. SSL
+- Free Render may **sleep** after idle (~15 min); first request can take 30–60s to wake
+- SQLite on free Render is **ephemeral** (resets on redeploy/sleep disk wipe). Fine for demos; for real data upgrade Render disk or Workers Paid + Containers
+- Stop local tunnel when DNS points to Render: close `wrangler tunnel run`
 
-Render issues HTTPS certificates after DNS validates (often 5–30 minutes). Then open:
+## Upgrade path (Cloudflare only)
 
-- https://myprototype.work/login.html
-
-Demo admin username is still `admin` unless you changed `ADMIN_USERNAME`. Use the generated `ADMIN_PASSWORD` from Render env vars (not the local `password123` unless you set that yourself).
-
-## Local production smoke test
-
-```bash
-docker build -t brayn-mf .
-docker run --rm -p 3000:3000 -e SESSION_SECRET=dev-secret -e NODE_ENV=production -v "${PWD}/data:/app/data" brayn-mf
-```
+1. Workers Paid on `bblessking@gmail.com`
+2. `npm run cf:deploy`
+3. Attach `www.myprototype.work` to the Worker custom domain

@@ -2,6 +2,12 @@ node_modules/
 .venv/
 venv/
 .env
+.cf-admin-password.txt
+.tunnel-token.txt
+.tunnel-id.txt
+.probe-login.html
+.dev.vars
+cloudflared-brayn.yml
 *.db
 data/*.db
 data/backups/
